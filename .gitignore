@@ -1,0 +1,24 @@
+# Dependencias e arquivos de build
+**/node_modules/
+**/dist/
+**/.env
+/dist/
+/coverage/
+*.tsbuildinfo
+
+# Local e ambiente de desenvolvimento
+.env
+.env.*
+!.env.example
+
+# Logs e caches Locais
+*.log
+npm-debug.log*
+yarn-debug.log*
+pnpm-debug.log*
+.vite/
+
+# Arquivos do sistema operacional
+.DS_Store
+Thumbs.db
+desktop.ini
