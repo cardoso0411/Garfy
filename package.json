@@ -1,0 +1,10 @@
+{
+  "name": "garfy",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "dev": "node scripts/dev.mjs",
+    "db:setup": "npm --prefix Backend run db:setup",
+    "test": "npm --prefix Backend test && npm --prefix Frontend run build"
+  }
+}

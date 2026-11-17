@@ -24,17 +24,15 @@ npm run dev
 
 O setup cria o banco se necessário e as tabelas `mesas`, `categorias`, `produtos`, `administradores`, `sessoes_administrativas`, `pedidos` e `itens_pedido`. Ele cadastra as mesas 1–20, quatro categorias, quatro produtos de exemplo e o primeiro administrador. Pode ser executado novamente sem duplicar esses dados. Se encontrar tabelas da versão antiga em inglês, interrompe a execução para evitar dois conjuntos de dados. A API usa a porta 3001 por padrão.
 
-## Iniciar o frontend
+## Iniciar a aplicação
 
-Em outro terminal:
+Na raiz do projeto, execute:
 
 ```powershell
-cd Frontend
-npm install
 npm run dev
 ```
 
-Abra a URL mostrada pelo Vite. O proxy local encaminha `/api` para `http://localhost:3001`. A área da loja fica em `/#/admin` e usa o e-mail e a senha do arquivo `.env.backend`.
+Esse comando inicia o backend, espera a conexão com o MySQL e então inicia o Vite. Abra a URL mostrada pelo Vite. O proxy local encaminha `/api` para a porta configurada em `Backend/.env.backend` (3001 por padrão). A área da loja fica em `/#/admin` e usa o e-mail e a senha desse arquivo. Se preferir terminais separados, execute `npm run dev` em `Backend` antes de iniciar `npm run dev` em `Frontend`.
 
 ## Funcionamento
 
