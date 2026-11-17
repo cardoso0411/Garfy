@@ -1,4 +1,4 @@
-import 'dotenv/config'
+import './env.js'
 import fs from 'node:fs/promises'
 import { fileURLToPath } from 'node:url'
 import mysql from 'mysql2/promise'
@@ -7,7 +7,7 @@ import bcrypt from 'bcryptjs'
 const database = process.env.MYSQL_DATABASE || 'garfy'
 if (!/^[a-zA-Z0-9_]+$/.test(database)) throw new Error('Nome de banco inválido.')
 if (!process.env.ADMIN_EMAIL || !process.env.ADMIN_PASSWORD || process.env.ADMIN_PASSWORD === 'troque-esta-senha') {
-  throw new Error('Configure ADMIN_EMAIL e uma ADMIN_PASSWORD segura no .env antes de criar o administrador.')
+  throw new Error('Configure ADMIN_EMAIL e uma ADMIN_PASSWORD segura no .env.backend antes de criar o administrador.')
 }
 const options = {
   host: process.env.MYSQL_HOST || '127.0.0.1', port: Number(process.env.MYSQL_PORT || 3306),

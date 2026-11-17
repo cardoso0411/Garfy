@@ -11,11 +11,11 @@ Cardápio digital para pedidos na mesa. A interface veio do protótipo **Pastry 
 
 ```powershell
 cd Backend
-Copy-Item .env.example .env
+Copy-Item .env.example .env.backend
 npm install
 ```
 
-Edite `Backend/.env` com as credenciais do MySQL, `MYSQL_DATABASE=garfy` e uma senha segura em `ADMIN_PASSWORD`. Se você já criou o banco `garfy`, o setup usará esse banco. Em seguida:
+Edite `Backend/.env.backend` com as credenciais do MySQL, `MYSQL_DATABASE=garfy` e uma senha segura em `ADMIN_PASSWORD`. Se você já criou o banco `garfy`, o setup usará esse banco. Em seguida:
 
 ```powershell
 npm run db:setup
@@ -34,7 +34,7 @@ npm install
 npm run dev
 ```
 
-Abra a URL mostrada pelo Vite. O proxy local encaminha `/api` para `http://localhost:3001`. A área da loja fica em `/#/admin` e usa o e-mail e a senha do arquivo `.env`.
+Abra a URL mostrada pelo Vite. O proxy local encaminha `/api` para `http://localhost:3001`. A área da loja fica em `/#/admin` e usa o e-mail e a senha do arquivo `.env.backend`.
 
 ## Funcionamento
 
@@ -51,4 +51,4 @@ cd ..\Frontend
 npm run build
 ```
 
-`Frontend/App.reference.tsx` guarda o código original exportado do Figma para consulta; a aplicação em execução está em `Frontend/src`.
+A aplicação em execução está em `Frontend/src`; o arquivo original do Figma permanece na pasta de origem fora deste repositório.
