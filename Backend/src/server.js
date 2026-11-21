@@ -1,12 +1,15 @@
 import './env.js'
 import express from 'express'
+import { rateLimit } from 'express-rate-limit'
 import crypto from 'node:crypto'
 import bcrypt from 'bcryptjs'
 import { pool } from './db.js'
+import helmet from 'helmet'
 import { orderStatuses, priceOrder, validItems } from './domain.js'
 
 const app = express()
 app.disable('x-powered-by')
+app.use(helmet())
 app.use(express.json({ limit: '100kb' }))
 const fail = (status, message) => Object.assign(new Error(message), { status })
 const token = () => crypto.randomBytes(32).toString('hex')
@@ -18,6 +21,13 @@ const statusToDb = { received: 'recebido', preparing: 'em_preparo', ready: 'pron
 const statusFromDb = Object.fromEntries(Object.entries(statusToDb).map(([apiStatus, dbStatus]) => [dbStatus, apiStatus]))
 const sizeToDb = { traditional: 'tradicional', large: 'grande' }
 const sizeFromDb = { tradicional: 'traditional', grande: 'large' }
+const adminLoginLimit = rateLimit({
+  windowMs: 15 * 60 * 1000,
+  limit: 5,
+  standardHeaders: 'draft-8',
+  legacyHeaders: false,
+  message: { error: 'Muitas tentativas de login. Tente novamente em 15 minutos.' }
+})
 
 async function query(sql, params = []) { const [rows] = await pool.execute(sql, params); return rows }
 const productSelect = `SELECT p.id, p.categoria_id AS categoryId, c.nome AS category, p.nome AS name,
@@ -79,7 +89,7 @@ async function orderDetails(id, admin = false) {
 }
 app.get('/api/orders/track/:token', async (req, res, next) => { try { if (!/^[a-f0-9]{64}$/.test(req.params.token)) throw fail(404, 'Pedido não encontrado.'); res.json(await orderDetails(req.params.token)) } catch (e) { next(e) } })
 
-app.post('/api/admin/login', async (req, res, next) => {
+app.post('/api/admin/login', adminLoginLimit, async (req, res, next) => {
   try {
     const email = str(req.body?.email, 255).toLowerCase()
     const password = req.body?.password
